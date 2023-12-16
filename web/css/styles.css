@@ -1,0 +1,51 @@
+#root {
+    height: 90vh; /* Take full height of viewport */
+    width: 90vw; /* Take full width of viewport */
+}
+
+.fullWithLeftMargin {
+    width: 100%;
+    height: 100%;
+    margin-left: 30px;
+}
+
+.containerTop {
+    width: 95%;
+    height: 10%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.containerBot {
+    width: 95%;
+    height: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.button {
+    width: 100px;
+    height: 50px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.graph-container {
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: auto;
+    border: 2px solid #ccc;
+}
+
+.table-container {
+    width: 100%;
+    height: 48%;
+    overflow-y: auto;
+    overflow-x: auto;
+    border: 2px solid #ccc;
+}
+
+table {
+    width: 100%;
+}

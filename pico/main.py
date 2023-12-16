@@ -46,8 +46,6 @@ def main():
     ufirestore.set_project_id("windforpi")
 
     doc = FirebaseJson()
-    doc.set("time/timestampValue", dateToIso(time.localtime()))
-    doc.set("value/doubleValue", 0)
 
     adc = ADC(Pin(28, mode=Pin.IN))
 
