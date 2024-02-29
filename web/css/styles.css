@@ -1,23 +1,37 @@
-#root {
-    height: 90vh; /* Take full height of viewport */
-    width: 90vw; /* Take full width of viewport */
+body {
+    height: 98vh; /* Take full height of viewport */
+    width: 98vw; /* Take full width of viewport */
+    margin-top: 1vh;
+    margin-right: 1vw;
+    margin-bottom: 1vh;
+    margin-left: 1vw;
 }
+
+#root {
+    width: 100%;
+    height: 100%;
+}
+/* 
+canvas {
+    width: 100% !important;
+    max-width: 1000px;
+    height: auto !important;
+} */
 
 .fullWithLeftMargin {
     width: 100%;
     height: 100%;
-    margin-left: 30px;
 }
 
 .containerTop {
-    width: 95%;
+    width: 100%;
     height: 10%;
     display: flex;
     flex-wrap: wrap;
 }
 
 .containerBot {
-    width: 95%;
+    width: 100%;
     height: 90%;
     display: flex;
     flex-wrap: wrap;
@@ -25,27 +39,70 @@
 }
 
 .button {
-    width: 100px;
-    height: 50px;
     padding: 10px;
     margin: 10px;
 }
 
 .graph-container {
     width: 100%;
+    height: 95%;
     overflow-y: auto;
     overflow-x: auto;
-    border: 2px solid #ccc;
+    border: 2px solid lightblue;
+    border-radius: 10px;
 }
 
 .table-container {
     width: 100%;
-    height: 48%;
+    height: 95%;
     overflow-y: auto;
     overflow-x: auto;
-    border: 2px solid #ccc;
+    border: 2px solid lightblue;
+    border-radius: 10px;
+}
+ 
+.chart-container {
+    width: 100%;
+    height: 100%;
 }
 
 table {
     width: 100%;
 }
+
+th {
+    font-size: 16px;
+    text-align: center;
+    width: 50%;
+}
+
+td {
+    font-size: 14x;
+    text-align: center;
+    width: 50%;
+}
+
+/* @keyframes spinner {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+.loading::before {
+    animation: 1.5s linear infinite spinner;
+    animation-play-state: inherit;
+    border: solid 5px #cfd0d1;
+    border-bottom-color: #1c87c9;
+    border-radius: 50%;
+    content: "";
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    will-change: transform;
+} */

@@ -49,26 +49,37 @@ def main():
 
     adc = ADC(Pin(28, mode=Pin.IN))
 
+    # calculate voltage from bits
+    tension_factor = 3.3 / 65536
+    factor = (993 + 222) / 222 * 1.03252
+    total_factor = tension_factor * factor
+
+    # INIT
     curr = 0
     cnt = 0
-
+    index = 0
+    t = dateToIso(time.localtime())
+    doc.set("time/timestampValue", t)
+    
+    # LOOP
     while True:
-        curr = adc.read_u16() * 3.3 / 65536 # calculate voltage from bits
-        t = time.localtime()
 
-        doc.set("year/integerValue", t[0])
-        doc.set("month/integerValue", t[1])
-        doc.set("day/integerValue", t[2])
-        doc.set("hour/integerValue", t[3])
-        doc.set("minute/integerValue", t[4])
-        doc.set("second/integerValue", t[5])
-        doc.set("fullTime/timestampValue", dateToIso(time.localtime()))
-        doc.set("value/doubleValue", curr)
-        response = ufirestore.create("data/", doc,  document_id=dateToIso(t), bg=False, cb=False)
-        print(cnt)
-        print(response)
-        sleep(1)
+        curr = adc.read_u16() * total_factor
+        doc.set(f'{index}/doubleValue', curr)
+
+        sleep(0.1)
         cnt = cnt + 1
+        index = cnt % 200
+
+        if (index == 0):
+
+            response = ufirestore.create("data/", doc,  document_id=t, bg=False, cb=False)
+        
+            print(cnt)
+            print(response)
+            
+            t = dateToIso(time.localtime())
+            doc.set("time/timestampValue", t)
 
 if __name__ == "__main__":
     main()
