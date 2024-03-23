@@ -67,7 +67,7 @@ async def producer(queue, led):
     delay_active = 0.150
     delay = 5
     is_idle = True
-    threshold = 0.100
+    threshold = 0 #0.100
     buffer_size = 100
 
     # LOOP
