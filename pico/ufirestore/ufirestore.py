@@ -1,6 +1,7 @@
 import ujson
 import _thread
 import urequests
+#import async_urequests as requests
 
 class FirestoreException(Exception):
     def __init__(self, message, code=400):
@@ -45,10 +46,28 @@ def send_request(path, method="GET", params=dict(), data=None, dump=True):
     headers = {}
     if FIREBASE_GLOBAL_VAR.ACCESS_TOKEN:
         headers["Authorization"] = "Bearer " + FIREBASE_GLOBAL_VAR.ACCESS_TOKEN
+        
+        response = urequests.request(
+        method, path, params=params, headers=headers, json=data)
+        
     if method == "POST":
         response = urequests.request(method, path, data=None, json=data)
     else:
         response = urequests.request(method, path, headers=headers)
+
+#     if method == "POST":
+#         response = urequests._requests(method, path, data=None, json=data)
+# #         try:
+# #             return await asyncio.wait_for(_requests(method, path, data=None, json=data), timeout=10)
+# #         except asyncio.TimeoutError as e:
+# #             raise FirestoreException("Timeout", 1234)
+#     else:
+#         response = urequests._requests(method, path, headers=headers)
+# #         try:
+#             return await asyncio.wait_for(_requests(method, path, headers=headers), timeout=10)
+#         except asyncio.TimeoutError as e:
+#             raise FirestoreException("Timeout", 1234)
+#     print(response.json())
 
     if dump == True:
         if response.status_code < 200 or response.status_code > 299:
