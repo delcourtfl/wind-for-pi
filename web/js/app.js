@@ -29,6 +29,7 @@ const Main = () => {
     const [data, setData] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
     const [fetchData, setFetchData] = React.useState(false);
+    const chartRef = React.useRef(null); // Ref to hold the chart instance
     
     const [activeTab, setActiveTab] = React.useState(false); // State to manage active tab
 
@@ -70,19 +71,27 @@ const Main = () => {
         }
     }, [fetchData]);
 
+    
+    function resetZoom() {
+        if (chartRef.current) {
+            chartRef.current.resetZoom();
+        }
+    }
+
     return (
         <div className="fullWithLeftMargin">
             <div className="containerTop">
-                <h1>Firestore Wind4Pi</h1>
+                <h2>Firestore Wind4Pi</h2>
                 <button className="button" disabled={fetchData} onClick={() => setFetchData(true)}>Fetch Data</button>
                 <button className="button" onClick={() => setActiveTab(!activeTab)}>Switch Display</button>
+                <button className="button" onClick={resetZoom}>Reset Zoom</button>
             </div>
             <div className="containerBot">
                 <div className="graph-container" style={{ display: activeTab ? 'none' : 'block' }}>
                     {loading ? (
                         <div className="loading"></div>
                     ) : (
-                        <Graph data={data} />
+                        <Graph data={data} chartRef={chartRef} />
                     )}
                 </div>
                 <div className="table-container" style={{ display: activeTab ? 'block' : 'none' }}>
@@ -120,7 +129,7 @@ const DataTable = ({ data }) => {
     );
 };
 
-const Graph = ({ data }) => {
+const Graph = ({ data, chartRef }) => {
 
     React.useEffect(() => {
         // Get the canvas element
@@ -141,6 +150,24 @@ const Graph = ({ data }) => {
                 }]
             },
             options: {
+                plugins: {
+                    zoom: {
+                        pan: {
+                          enabled: true,
+                          mode: 'x',
+                          modifierKey: 'ctrl',
+                        },
+                        zoom: {
+                          drag: {
+                            enabled: true
+                          },
+                          pinch: {
+                            enabled: true
+                          },
+                          mode: 'x',
+                        },
+                    }
+                },
                 scales: {
                     x: {
                         type: 'time',
@@ -161,6 +188,9 @@ const Graph = ({ data }) => {
                 // Customize chart options as needed
             }
         });
+
+        // Assign the chart instance to the ref
+        chartRef.current = chart;
 
         // Cleanup function to destroy the chart when component unmounts
         return () => {
